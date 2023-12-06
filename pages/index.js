@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "sonner";
 import { postData } from "@/services/services";
+import { verifyIsLoggedIn } from "@/helper/helper";
 
 export default function Home() {
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
@@ -23,24 +24,21 @@ export default function Home() {
   const [pass, setPass] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("Etoken");
-    if (token) {
-      router.push("/Dashboard");
-    }
+    verifyIsLoggedIn(router);
   }, []);
 
   //function to manage login form
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (email == "" && pass == "") {
+    if (email == "" || pass == "") {
       toast.error("Please fill out all the fields.");
     } else {
       setisSubmitingLoader(true);
       const result = await postData("/login", { email: email, password: pass });
       console.log("result", result);
       if (result.success) {
-        localStorage.setItem("Etoken");
+        localStorage.setItem("Etoken", result.token);
         setisSubmitingLoader(false);
         toast.success("Login Successfull");
         router.push("/Dashboard");
