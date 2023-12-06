@@ -131,7 +131,7 @@ export default function Home() {
                           <p class=" mb-0">
                             Don't have account?
                             <Link href="/Register" class="text-primary ml-1">
-                              Sign UP
+                              Sign Up
                             </Link>
                           </p>
                         </div>
