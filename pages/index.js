@@ -38,7 +38,7 @@ export default function Home() {
       const result = await postData("/login", { email: email, password: pass });
       console.log("result", result);
       if (result.success) {
-        localStorage.setItem("Etoken", result.token);
+        localStorage.setItem("Etoken", result.data.token);
         setisSubmitingLoader(false);
         toast.success("Login Successfull");
         router.push("/Dashboard");
