@@ -32,17 +32,22 @@ export default function Home() {
   //function to manage login form
   async function handleSubmit(event) {
     event.preventDefault();
-    setisSubmitingLoader(true);
-    const result = await postData("/login", { email: email, password: pass });
-    console.log("result", result);
-    if (result.success) {
-      localStorage.setItem("Etoken");
-      setisSubmitingLoader(false);
-      toast.success("Login Successfull");
-      router.push("/Dashboard");
+
+    if (email == "" && pass == "") {
+      toast.error("Please fill out all the fields.");
     } else {
-      setisSubmitingLoader(false);
-      toast.error("Login Failed");
+      setisSubmitingLoader(true);
+      const result = await postData("/login", { email: email, password: pass });
+      console.log("result", result);
+      if (result.success) {
+        localStorage.setItem("Etoken");
+        setisSubmitingLoader(false);
+        toast.success("Login Successfull");
+        router.push("/Dashboard");
+      } else {
+        setisSubmitingLoader(false);
+        toast.error("Login Failed");
+      }
     }
   }
   return (
@@ -89,7 +94,11 @@ export default function Home() {
                         <input
                           type="email"
                           className="form-control"
-                          placeholder="Username"
+                          placeholder="Email"
+                          required={true}
+                          onChange={(e) => {
+                            setEmail(e?.target?.value);
+                          }}
                         />
                       </div>
                       <div className="input-group mb-4">
@@ -100,6 +109,10 @@ export default function Home() {
                           type="password"
                           className="form-control"
                           placeholder="Password"
+                          required={true}
+                          onChange={(e) => {
+                            setPass(e?.target?.value);
+                          }}
                         />
                       </div>
                       <div className="row mb-0">
