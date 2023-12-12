@@ -10,7 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "sonner";
-import { postData } from "@/services/services";
+import { getData, postData } from "@/services/services";
 import { verifyIsLoggedIn } from "@/helper/helper";
 export default function Home() {
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
@@ -18,10 +18,31 @@ export default function Home() {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [Role, setRole] = useState([]);
 
   useEffect(() => {
     verifyIsLoggedIn(router);
+    getRoles();
   }, []);
+
+  //function to get user roles
+  async function getRoles() {
+    try {
+      const result = await getData("/GetRole");
+      if (result.status) {
+        console.log("Roles", result);
+        const Employeerole = result?.data.filter(
+          (item) => item?.role_name == "Employee"
+        );
+        console.log("Emp role", Employeerole);
+        setRole(Employeerole);
+      } else {
+        toast.error("Unable to fetch role");
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  }
 
   async function handleRegister(event) {
     event.preventDefault();
@@ -34,9 +55,9 @@ export default function Home() {
         name: name,
         email: email,
         password: password,
-        user_type: "Employee",
+        user_type: Role[0].id,
       });
-      console.log("result", result);
+      // console.log("result", result);
       if (result.status) {
         localStorage.setItem("Etoken", result.token);
         setisSubmitingLoader(false);
