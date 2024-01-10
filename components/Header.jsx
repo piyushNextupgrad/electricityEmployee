@@ -1,7 +1,11 @@
 import { FaSistrix, FaAlignJustify, FaArrowsToCircle, FaEnvelope, FaRegBell, FaUserTie, FaRegEnvelope, FaGear, FaCircleQuestion, FaArrowRightToBracket } from "react-icons/fa6";
 import { useState,useEffect } from "react";
 import { getData } from "@/services/services";
+import { useRouter } from "next/navigation";
+
 const Header = () => {
+
+  const route = useRouter()
 
   const [sidebarClass, setsidebarClass] = useState("sidenav-toggled");
   const[username,setUserName] = useState("")
@@ -30,6 +34,12 @@ const Header = () => {
   
   }
 
+  const Logout = ()=>{
+    
+    localStorage.clear()
+    route.push("/")      
+    
+  }
 
   function toggleSidebar() {
 
@@ -298,7 +308,7 @@ const Header = () => {
                     <FaCircleQuestion />{" "}
                     FAQ{" "}
                   </a>
-                  <a href="#" className="dropdown-item pt-3 pb-3">
+                  <a href="/" className="dropdown-item pt-3 pb-3" onClick={()=>Logout()}>
                     <FaArrowRightToBracket />
                     Sign Out{" "}
                   </a>
