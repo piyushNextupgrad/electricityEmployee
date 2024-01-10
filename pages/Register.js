@@ -30,11 +30,11 @@ export default function Home() {
     try {
       const result = await getData("/GetRole");
       if (result.status) {
-        console.log("Roles", result);
+        // console.log("Roles", result);
         const Employeerole = result?.data.filter(
           (item) => item?.role_name == "Employee"
         );
-        console.log("Emp role", Employeerole);
+        // console.log("Emp role", Employeerole);
         setRole(Employeerole);
       } else {
         toast.error("Unable to fetch role");
@@ -57,7 +57,7 @@ export default function Home() {
         password: password,
         user_type: Role[0].id,
       });
-      // console.log("result", result);
+      console.log(" register result", result);
       if (result.status) {
         localStorage.setItem("Etoken", result.token);
         setisSubmitingLoader(false);

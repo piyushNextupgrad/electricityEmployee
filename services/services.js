@@ -50,7 +50,7 @@ export async function putData(route, putObject) {
   const token = localStorage.getItem("token");
   try {
     const data = await fetch(process.env.SITE_URL + route, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: token,
@@ -69,7 +69,7 @@ export async function deleteData(route, deleteObject) {
   const token = localStorage.getItem("token");
   try {
     const data = await fetch(process.env.SITE_URL + route, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: token,

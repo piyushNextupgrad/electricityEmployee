@@ -39,6 +39,7 @@ export default function Home() {
       console.log("result", result);
       if (result.success) {
         localStorage.setItem("Etoken", result.data.token);
+        localStorage.setItem("EmpID", 49);
         setisSubmitingLoader(false);
         toast.success("Login Successfull");
         router.push("/Dashboard");

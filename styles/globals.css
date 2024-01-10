@@ -23627,3 +23627,7 @@ a.actionsubmit:hover {
 a.list-group-item.list-group-item-action {
   padding: 0.39rem 1.25rem;
 }
+.cellOverlap{
+  white-space: normal !important;
+  min-width: 400px !important;
+}

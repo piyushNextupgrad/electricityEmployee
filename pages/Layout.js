@@ -7,13 +7,8 @@ import { useEffect } from "react";
 const Layout = ({children}) => {
 
     const router = useRouter()
-
-   
-
-
-
     return ( <>
-    {router.pathname =="/" || router.pathname == "/forgot" || router.pathname == "/Register"?<>{children}</> :<div class="page">
+    {router.pathname =="/" || router.pathname == "/forgot" || router.pathname == "/Register" ?<>{children}</> :<div class="page">
   <div class="page-main"><Header />
     <div>
     <Sidebar />{children}

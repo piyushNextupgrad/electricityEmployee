@@ -1,619 +1,685 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { getData, putData } from '@/services/services';
+import { Toaster, toast } from "sonner";
+import { getFormatedDate } from '@/helper/helper';
+
 const Ticket = () => {
-    return (
-         <>
-    
-    <div className="app-content">
-  <div className="side-app leftmenu-icon">
-  <div className="page-header">
-      <div className="page-leftheader">
-        <h4 className="page-title">Ticket</h4>
-        <ol className="breadcrumb pl-0">
-          <li className="breadcrumb-item">
-            <a href="#">Home</a>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-          Ticket
-          </li>
-        </ol>
-      </div>
-      <div className="page-rightheader">
-        <div className="ml-3 ml-auto d-flex">&nbsp;</div>
-      </div>
-    </div>
-    <div className="row">
-  <div className="col-md-12"><div className="tab-menu-heading">
-            <div className="tabs-menu ">
-             
-              <ul className="nav panel-tabs">
-                <li className="">
-                  <a href="#tab1" className="active" data-toggle="tab">
-                  Previous Ticket
-                  </a>
-                </li>
-                <li>
-                  <a href="#tab2" data-toggle="tab" className="">
-                  Today Ticket
-                  </a>
-                </li>
-                <li>
-                  <Link href="#tab3" data-toggle="tab" className="">
-                  Upcoming Ticket
-                  </Link>
-                </li>
-               
-              </ul>
-            </div>
-          </div>
-    <div className="card"> 
-      <div className="card-body-tab">
-        <div className="panel panel-primary">
-         
-          <div className="panel-body tabs-menu-body">
-            <div className="tab-content">
-              <div className="tab-pane active" id="tab1">
-                <div className="table-responsive">
-                <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
-                    <thead className="bg-primary text-white">
-                      <tr>
-                        <th className="text-white">Service ID</th>
-                        <th className="text-white">Name</th>
-                        <th className="text-white">Services</th>
-                        <th className="text-white">Email ID</th>
-                        <th className="text-white">Address</th>
-                        <th className="text-white">Zip Code</th>
-                        <th className="text-white">Date</th>
-                        <th className="text-white">Time</th>                      
-                        <th className="text-white">Payment</th>
-                        <th className="text-white">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                        
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                       
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                       
-                        
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                       
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>  
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                       
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="tab-pane" id="tab2">
-                <div className="table-responsive">
-                <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
-                    <thead className="bg-primary text-white">
-                      <tr>
-                        <th className="text-white">Service ID</th>
-                        <th className="text-white">Name</th>
-                        <th className="text-white">Services</th>
-                        <th className="text-white">Email ID</th>
-                        <th className="text-white">Address</th>
-                        <th className="text-white">Zip Code</th>
-                        <th className="text-white">Date</th>
-                        <th className="text-white">Time</th>                      
-                        <th className="text-white">Payment</th>
-                        <th className="text-white">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                       
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td> 
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                        
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                        
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                       
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>  
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="tab-pane" id="tab3">
-                <div className="table-responsive">
-                <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
-                    <thead className="bg-primary text-white">
-                      <tr>
-                        <th className="text-white">Service ID</th>
-                        <th className="text-white">Name</th>
-                        <th className="text-white">Services</th>
-                        <th className="text-white">Email ID</th>
-                        <th className="text-white">Address</th>
-                        <th className="text-white">Zip Code</th>
-                        <th className="text-white">Date</th>
-                        <th className="text-white">Time</th>                      
-                        <th className="text-white">Payment</th>
-                        <th className="text-white">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                        
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                        
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                       
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>                       
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="unpaid">Unpaid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ser123</th>
-                        <td>Joan Powell</td>
-                        <td>AC Repair</td>
-                        <td>Joan@gmail.com</td>
-                        <td>Los Angeles</td>
-                        <td>56584</td>
-                        <td>18 Oct 2023</td>
-                        <td>10:00AM</td>
-                        <td>
-                          <span className="paid">Paid</span>
-                        </td>
-                        <td>
-                        <Link className="actionsubmit" href="#">Submit</Link>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-             
-            </div>
+  const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
+  const [allTickets, setAllTickets] = useState([])
+  const[refresh,setRefresh] = useState('')
+
+
+  useEffect(() => {
+    getTicket()
+  }, [refresh]);
+
+  const getTicket = async () => {
+    setisSubmitingLoader(true)
+    try {
+      if (typeof window !== 'undefined') {
+        const EmpId = localStorage.getItem("EmpID")
+        // console.log("EmpId",EmpId)
+        const resp = await getData("/GetSupportTicket")
+        // console.log("get ticket resp", resp)
+        const filtered_tickets = resp.data.filter((item) => item.emp_id == EmpId)
+        console.log("filtered_tickets", filtered_tickets)
+        setAllTickets(filtered_tickets)
+
+      }
+    }
+    catch (error) {
+      console.log("try-catch error", error)
+    }
+    setisSubmitingLoader(false)
+  }
+
+  const TicketComplete = async(updateId,customerId)=>{
+  
+   
+    setisSubmitingLoader(true)
+
+    try {
+      const updateDetails ={
+        "updId":updateId,
+         "customer_id": customerId,
+         "support_status":"1"
+        }
+      const resp = await putData("/UpdateSupportTicket",updateDetails)
+      
+      resp.message==="Ticket Updated Successfully" ? toast.success(resp.message):toast.error(resp.message)
+      // setTimeout(()=>location.reload(),2000)
+      setRefresh(Math.random())
+    } catch (error) {
+      console.log("try-catch error",error)
+    }
+    setisSubmitingLoader(false)
+  }
+
+
+  return (
+    <>
+      {isSubmitingLoader ? (
+        <div className="overlay">
+          <div className="spinner-container">
+            <img className="animatingSpinnerSvg" src="/spinner.svg" alt="" />
           </div>
         </div>
+      ) : null}
+      <Toaster position="top-center" richColors />
+      <div className="app-content">
+        <div className="side-app leftmenu-icon">
+          <div className="page-header">
+            <div className="page-leftheader">
+              <h4 className="page-title">Ticket</h4>
+              <ol className="breadcrumb pl-0">
+                <li className="breadcrumb-item">
+                  <a href="#">Home</a>
+                </li>
+                <li className="breadcrumb-item active" aria-current="page">
+                  Ticket
+                </li>
+              </ol>
+            </div>
+            <div className="page-rightheader">
+              <div className="ml-3 ml-auto d-flex">&nbsp;</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12"><div className="tab-menu-heading">
+              <div className="tabs-menu ">
+                {/* <ul className="nav panel-tabs">
+                  <li className="">
+                    <a href="#tab1" className="active" data-toggle="tab">
+                      Previous Ticket
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#tab2" data-toggle="tab" className="">
+                      Today Ticket
+                    </a>
+                  </li>
+                  <li>
+                    <Link href="#tab3" data-toggle="tab" className="">
+                      Upcoming Ticket
+                    </Link>
+                  </li>
+
+                </ul> */}
+              </div>
+            </div>
+              <div className="card">
+                <div className="card-body-tab">
+                  <div className="panel panel-primary">
+                    <div className="panel-body tabs-menu-body">
+                      <div className="tab-content">
+                        <div className="tab-pane active" id="tab1">
+                          <div className="table-responsive">
+                            <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
+                              <thead className="bg-primary text-white">
+                                <tr>
+                                  <th className="text-white">Ticket ID</th>
+                                  <th className="text-white">Ticket Date</th>
+                                  <th className="text-white">Unique ID</th>
+                                  <th className="text-white">Service ID</th>
+                                  <th className="text-white">Ticket Description</th>
+                                  <th className="text-white">Customer ID</th>
+                                  <th className="text-white">Customer Phone</th>
+                                  <th className="text-white">Customer Address</th>
+                                  <th className="text-white">Status</th>
+                                  <th className="text-white">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {allTickets ? allTickets.map((item, index) => (
+                                  <tr key={index}>
+                                    <th scope="row">{item.id}</th>
+                                    <td>{getFormatedDate(item.created_at, "DD-MM-YYYY")}</td>
+                                    <td>{item.unique_service_id}</td>
+                                    <td>{item.service_id}</td>
+                                    <td className='cellOverlap'>{item.issue_desc}</td>
+                                    <td>{item.customer_id}</td>
+                                    <td>1234567890</td>
+                                    <td>Lucknow</td>
+                                    <td>
+                                      {item.support_status == 0 ? (<span className="unpaid">Pending</span>) : (<span className="paid">Done</span>)}
+                                    </td>
+                                    <td>
+                                      {item.support_status == 0 ?(<Link className="actionsubmit" href="#" onClick={() => TicketComplete(item.id,item.customer_id)}>Submit</Link>):(<Link className="actionsubmit" href="#" onClick={() => toast.error("Ticket Completed.")}>Submit</Link>)}
+                                      
+                                      
+                                    </td>
+                                  </tr>)) : <>No Services</>}
+
+                                {/* <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr> */}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        {/* <div className="tab-pane" id="tab2">
+                          <div className="table-responsive">
+                            <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
+                              <thead className="bg-primary text-white">
+                                <tr>
+                                  <th className="text-white">Service ID 2</th>
+                                  <th className="text-white">Name</th>
+                                  <th className="text-white">Services</th>
+                                  <th className="text-white">Email ID</th>
+                                  <th className="text-white">Address</th>
+                                  <th className="text-white">Zip Code</th>
+                                  <th className="text-white">Date</th>
+                                  <th className="text-white">Time</th>
+                                  <th className="text-white">Payment</th>
+                                  <th className="text-white">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div className="tab-pane" id="tab3">
+                          <div className="table-responsive">
+                            <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
+                              <thead className="bg-primary text-white">
+                                <tr>
+                                  <th className="text-white">Service ID 3</th>
+                                  <th className="text-white">Name</th>
+                                  <th className="text-white">Services</th>
+                                  <th className="text-white">Email ID</th>
+                                  <th className="text-white">Address</th>
+                                  <th className="text-white">Zip Code</th>
+                                  <th className="text-white">Date</th>
+                                  <th className="text-white">Time</th>
+                                  <th className="text-white">Payment</th>
+                                  <th className="text-white">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="unpaid">Unpaid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ser123</th>
+                                  <td>Joan Powell</td>
+                                  <td>AC Repair</td>
+                                  <td>Joan@gmail.com</td>
+                                  <td>Los Angeles</td>
+                                  <td>56584</td>
+                                  <td>18 Oct 2023</td>
+                                  <td>10:00AM</td>
+                                  <td>
+                                    <span className="paid">Paid</span>
+                                  </td>
+                                  <td>
+                                    <Link className="actionsubmit" href="#">Submit</Link>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div> */}
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-
-    </div>
-</div>
 
 
-    
-    </> 
-    );
+
+    </>
+  );
 }
- 
+
 export default Ticket;
