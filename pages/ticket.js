@@ -7,13 +7,26 @@ import { getFormatedDate } from '@/helper/helper';
 const Ticket = () => {
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
   const [allTickets, setAllTickets] = useState([])
-  const[refresh,setRefresh] = useState('')
+  const [allUser,setAllUser] = useState([])
+  const [refresh, setRefresh] = useState('')
 
 
   useEffect(() => {
     getTicket()
+    getCustomerDetails()
   }, [refresh]);
 
+  const getCustomerDetails = async () => {
+    setisSubmitingLoader(true)
+    try {
+      const resp = await getData("/GetAllUser")
+      setAllUser(resp.data)
+    } catch (error) {
+      console.log("try-catch error", error)
+    }
+    setisSubmitingLoader(false)
+  }
+  
   const getTicket = async () => {
     setisSubmitingLoader(true)
     try {
@@ -25,6 +38,14 @@ const Ticket = () => {
         const filtered_tickets = resp.data.filter((item) => item.emp_id == EmpId)
         console.log("filtered_tickets", filtered_tickets)
         setAllTickets(filtered_tickets)
+        // const filtered_customerId=[]
+        //  filtered_tickets.map((item) => {
+        //   if(!filtered_customerId.includes(item.customer_id)){
+        //     filtered_customerId.push(item.customer_id)
+        //   }})
+        
+        // getCustomerDetails(filtered_customerId)
+
 
       }
     }
@@ -34,24 +55,24 @@ const Ticket = () => {
     setisSubmitingLoader(false)
   }
 
-  const TicketComplete = async(updateId,customerId)=>{
-  
-   
+  const TicketComplete = async (updateId, customerId) => {
+
+
     setisSubmitingLoader(true)
 
     try {
-      const updateDetails ={
-        "updId":updateId,
-         "customer_id": customerId,
-         "support_status":"1"
-        }
-      const resp = await putData("/UpdateSupportTicket",updateDetails)
-      
-      resp.message==="Ticket Updated Successfully" ? toast.success(resp.message):toast.error(resp.message)
+      const updateDetails = {
+        "updId": updateId,
+        "customer_id": customerId,
+        "support_status": "1"
+      }
+      const resp = await putData("/UpdateSupportTicket", updateDetails)
+
+      resp.message === "Ticket Updated Successfully" ? toast.success(resp.message) : toast.error(resp.message)
       // setTimeout(()=>location.reload(),2000)
       setRefresh(Math.random())
     } catch (error) {
-      console.log("try-catch error",error)
+      console.log("try-catch error", error)
     }
     setisSubmitingLoader(false)
   }
@@ -74,7 +95,7 @@ const Ticket = () => {
               <h4 className="page-title">Ticket</h4>
               <ol className="breadcrumb pl-0">
                 <li className="breadcrumb-item">
-                  <a href="#">Home</a>
+                  <a href="/Dashboard">Home</a>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
                   Ticket
@@ -139,15 +160,15 @@ const Ticket = () => {
                                     <td>{item.service_id}</td>
                                     <td className='cellOverlap'>{item.issue_desc}</td>
                                     <td>{item.customer_id}</td>
-                                    <td>1234567890</td>
-                                    <td>Lucknow</td>
+                                    <td>{allUser.map((user)=>user.id==item.customer_id?user.user_phno:'')}</td>
+                                    <td>{allUser.map((user)=>user.id==item.customer_id?user.user_house_num + " "+ user.user_locality+" "+user.user_landmark+" "+user.user_city+" "+user.user_state:'')}</td>
                                     <td>
-                                      {item.support_status == 0 ? (<span className="unpaid">Pending</span>) : (<span className="paid">Done</span>)}
+                                      {item.support_status == 0 ? (<span className="unpaid">Pending</span>) : (<span className="paid done">Done</span>)}
                                     </td>
                                     <td>
-                                      {item.support_status == 0 ?(<Link className="actionsubmit" href="#" onClick={() => TicketComplete(item.id,item.customer_id)}>Submit</Link>):(<Link className="actionsubmit" href="#" onClick={() => toast.error("Ticket Completed.")}>Submit</Link>)}
-                                      
-                                      
+                                      {item.support_status == 0 ? (<Link className="actionsubmit" href="#" onClick={() => TicketComplete(item.id, item.customer_id)}>Submit</Link>) : (<Link className="actionsubmit" href="#" onClick={() => toast.error("Ticket Completed.")}>Submit</Link>)}
+
+
                                     </td>
                                   </tr>)) : <>No Services</>}
 
