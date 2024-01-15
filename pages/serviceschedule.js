@@ -24,6 +24,7 @@ const Serviceschedule = () => {
   const getAllUser = async()=>{
     try {
       const resp = await getData("/GetAllUser")
+      console.log("all user resp",resp)
       setAllUsers(resp.data)
     } catch (error) {
       console.log("try-catch error",error)
@@ -174,17 +175,18 @@ const Serviceschedule = () => {
                               <tbody>
                                 {PreviousServices.map((item, index) => (
                                   <tr key={index}>
+                                    {console.log("item",item)}
                                     <th scope="row">{item.unique_service_id}</th>
                                     <td>{item.service_name}</td>
                                     <td>{item.service_id}</td>
-                                    <td>{item.service_avail_date}</td>
+                                    <td>{getFormatedDate(item.service_avail_date,"DD-MM-YYYY hh:mm")}</td>
                                     <td>{item.service_cost}</td>
                                     <td>{item.qty}</td>
-                                    <td>{item.customer_id}</td>
+                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.name:'')} [ ID :{item.customer_id}]</td>
                                     <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_phno:'')}</td>
                                     <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_house_num + " "+ user.user_locality+" "+user.user_landmark+" "+user.user_city+" "+user.user_state:'')}</td>
                                     
-                                    <td>{item.created_at}</td>
+                                    <td>{getFormatedDate(item.created_at,"DD-MM-YYYY hh:mm")}</td>
                                     <td>
                                       {item.status == 0 ? (<span className="unpaid">Pending</span>) : (<span className="paid done">Done</span>)}
                                     </td>
@@ -353,7 +355,7 @@ const Serviceschedule = () => {
                                     <td>{item.service_avail_date}</td>
                                     <td>{item.service_cost}</td>
                                     <td>{item.qty}</td>
-                                    <td>{item.customer_id}</td>
+                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.name:'')} [ ID :{item.customer_id}]</td>
                                     <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_phno:'')}</td>
                                     <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_house_num + " "+ user.user_locality+" "+user.user_landmark+" "+user.user_city+" "+user.user_state:'')}</td>
                                     <td>{item.created_at}</td>
@@ -553,7 +555,7 @@ const Serviceschedule = () => {
                                     <td>{item.service_avail_date}</td>
                                     <td>{item.service_cost}</td>
                                     <td>{item.qty}</td>
-                                    <td>{item.customer_id}</td>
+                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.name:'')} [ ID :{item.customer_id}]</td>
                                     <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_phno:'')}</td>
                                     <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_house_num + " "+ user.user_locality+" "+user.user_landmark+" "+user.user_city+" "+user.user_state:'')}</td>
                                     <td>{item.created_at}</td>

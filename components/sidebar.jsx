@@ -8,6 +8,7 @@ const Sidebar = () => {
 
   const [username, setUserName] = useState("")
   const [userRole, setUserRole] = useState('')
+  const [userPhoto,setUserPhoto] = useState('')
 
   useEffect(() => {
     getUser();
@@ -21,6 +22,7 @@ const Sidebar = () => {
         console.log("resp", resp)
         setUserName(resp.data[0].name)
         setUserRole(resp.data[0].user_type)
+        setUserPhoto(resp.data[0].user_profile_photo)
        
       }
     } catch (error) {
@@ -35,14 +37,14 @@ const Sidebar = () => {
           <div className="dropdown user-pro-body text-center">
             <div className="user-pic">
               <img
-                src="/1.jpg"
+                src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
                 alt="user-img"
                 className="avatar-xl rounded-circle mb-1"
               />
             </div>
             <div className="user-info">
               <h6 className=" mb-0 font-weight-semibold">{username}</h6>
-              <span className="text-muted app-sidebar__user-name text-sm">{userRole}</span>
+              <span className="text-muted app-sidebar__user-name text-sm">Employee</span>
             </div>
           </div>
         </div>

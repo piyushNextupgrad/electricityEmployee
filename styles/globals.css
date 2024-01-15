@@ -28030,3 +28030,8 @@ a.list-group-item.list-group-item-action {
   color: green !important;
   background-color: lightgreen !important;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

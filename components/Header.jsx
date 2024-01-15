@@ -1,44 +1,84 @@
 import { FaSistrix, FaAlignJustify, FaArrowsToCircle, FaEnvelope, FaRegBell, FaUserTie, FaRegEnvelope, FaGear, FaCircleQuestion, FaArrowRightToBracket } from "react-icons/fa6";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getData } from "@/services/services";
 import { useRouter } from "next/navigation";
+
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Image from "next/image";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import axios from "axios";
+import { Toaster, toast } from "sonner";
 
 const Header = () => {
 
   const route = useRouter()
 
   const [sidebarClass, setsidebarClass] = useState("sidenav-toggled");
-  const[username,setUserName] = useState("")
-  const [userRole,setUserRole] = useState('')
-  const [userEmail,setUserEmail] = useState('')
+  const [show, setShow] = useState(false);
+  const [username, setUserName] = useState("")
+  const [userId, setUserId] = useState()
+  // const [userRole, setUserRole] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [userPhoto, setUserPhoto] = useState('')
+  const [userPhone, setUserPhone] = useState()
+  const [userNewPassword, setUserNewPassword] = useState('')
+  const [userNewPasswordConfirm, setUserNewPasswordConfirm] = useState('')
+  const [userAddress, setUserAddress] = useState('')
+  const [userZip, setUserZip] = useState()
+  const [userCity, setUserCity] = useState('')
+  const [userState, setUserState] = useState('')
+  const [userCountry, setUserCountry] = useState('')
+  const [userUpdatedPhoto, setUserUpdatedPhoto] = useState('')
+  const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
+  const [refresh,setRefresh] = useState('')
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [refresh]);
 
-  const getUser = async()=>{
-      try {
-        if(typeof window !== 'undefined'){
-          const EmpId = localStorage.getItem("EmpID")
+  const getUser = async () => {
+    try {
+      if (typeof window !== 'undefined') {
+        const EmpId = localStorage.getItem("EmpID")
+        setUserId(EmpId)
+        !EmpId ? route.push("/") : ''
+        console.log("EmpId", EmpId)
         const resp = await getData(`/GetAllUser?id=${EmpId}`)
-        console.log("resp",resp)
+        console.log("resp", resp)
+
         setUserName(resp.data[0].name)
-        setUserRole(resp.data[0].user_type)
+        // setUserRole(resp.data[0].user_type)
         setUserEmail(resp.data[0].email)
+        setUserPhoto(resp.data[0].user_profile_photo)
+        setUserPhone(resp.data[0].user_phno)
+        setUserNewPassword()
+        setUserNewPasswordConfirm()
+        setUserAddress(resp.data[0].user_locality)
+        setUserZip(resp.data[0].user_zipcode)
+        setUserCity(resp.data[0].user_city)
+        setUserState(resp.data[0].user_state)
+        setUserCountry(resp.data[0].user_country)
 
 
-        }
-      } catch (error) {
-        console.log("try-catch error",error)
+
       }
-  
+    } catch (error) {
+      console.log("try-catch error", error)
+    }
+
   }
 
-  const Logout = ()=>{
-    
+  const Logout = () => {
+
     localStorage.clear()
-    route.push("/")      
-    
+    route.push("/")
+
   }
 
   function toggleSidebar() {
@@ -56,8 +96,166 @@ const Header = () => {
 
   }
 
+  const userUpdate = async () => {
+
+    setisSubmitingLoader(true)
+    try {
+      
+      if(userPhone.length==10 || userPhone.length==undefined && userZip.length==6 || userZip.length==undefined){
+
+        const formData = new FormData();
+
+      formData.append('updId', userId);
+      formData.append("name", username);
+      formData.append("email", userEmail);
+      formData.append("user_phno", userPhone);
+      formData.append("user_city", userCity);
+      formData.append("user_locality", userAddress);
+      formData.append("user_state", userState);
+      formData.append("user_zipcode", userZip);
+      formData.append("user_profile_photo", userUpdatedPhoto);
+      formData.append("user_country", userCountry);
+
+      // console.log("formData", formData)
+      const resp = await axios.post("https://nextupgrad.us/electricity/api/UpdateUser", formData)
+      console.log("user update resp", resp)
+      resp.data.message==="User Updated Successfully"? toast.success(resp.data.message):toast.error(resp.data.message)
+
+      setRefresh(Math.random)
+    setTimeout(()=>location.reload(),1500)
+
+      }
+      else{
+        toast.error("Please check Phone no and Zipcode.")
+      }
+
+      
+      
+
+    } catch (error) {
+      console.log('try-catch error', error)
+    }
+    
+    setisSubmitingLoader(false)
+
+  }
+
   return (
     <>
+      {isSubmitingLoader ? (
+        <div className="overlay">
+          <div className="spinner-container">
+            <img className="animatingSpinnerSvg" src="/spinner.svg" alt="" />
+          </div>
+        </div>
+      ) : null}
+      <Toaster position="top-center" richColors />
+      {/* model start */}
+      <Modal show={show} onHide={handleClose} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title><Image src="/logo.png" height={50} width={200} alt="img" /></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="container">
+            <div className="row">
+              <div className="col-4 d-flex justify-content-center align-items-center">
+                <Row>
+                  <Image src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
+                  {/* <img  src="/1.jpg"/> */}
+                </Row>
+              </div>
+              <div className="col-8">
+                <Form>
+
+                  <Row className="mb-1">
+                    <Form.Group as={Col} controlId="formGridPassword">
+                      <Form.Label>Name</Form.Label>
+                      <Form.Control type="text" value={username} onChange={(e) => setUserName(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridEmail" >
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control type="email" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} disabled/>
+                    </Form.Group>
+
+
+
+                  </Row>
+
+                  <Form.Group controlId="formFile" className="mb-1">
+                    <Form.Label>Profile Photo</Form.Label>
+                    <Form.Control type="file" onChange={(e) => setUserUpdatedPhoto(e.target.files[0])} />
+                  </Form.Group>
+
+                  <Row>
+                    <Form.Group as={Col} controlId="formGridfghPassword">
+                      <Form.Label>Phone</Form.Label>
+                      <Form.Control type="number" value={userPhone} onChange={(e) => setUserPhone(e.target.value)} />
+                    </Form.Group>
+
+                  </Row>
+                  <Row className="mb-1 mt-1">
+
+
+                    <Form.Group as={Col} controlId="formGriddhEmail">
+                      <Form.Label>New Password</Form.Label>
+                      <Form.Control type="password" placeholder="Enter new password" value={userNewPassword} onChange={(e) => setUserNewPassword(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridasdrgEmail">
+                      <Form.Label>Confirm New Password</Form.Label>
+                      <Form.Control type="password" placeholder="Confirm new password" value={userNewPasswordConfirm} onChange={(e) => setUserNewPasswordConfirm(e.target.value)} />
+                    </Form.Group>
+
+
+                  </Row>
+
+                  <Form.Group className="mb-1" controlId="formGridAddress2">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control type="text" value={userAddress} onChange={(e) => setUserAddress(e.target.value)} />
+                  </Form.Group>
+
+
+                  <Row className="mb-1">
+                    <Form.Group as={Col} controlId="formGridZip">
+                      <Form.Label>Zip code</Form.Label>
+                      <Form.Control type="number" value={userZip} onChange={(e) => setUserZip(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridCity">
+                      <Form.Label>City</Form.Label>
+                      <Form.Control type="text" value={userCity} onChange={(e) => setUserCity(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridfggCity">
+                      <Form.Label>State</Form.Label>
+                      <Form.Control type="text" value={userState} onChange={(e) => setUserState(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGriddfgdCity">
+                      <Form.Label>Country</Form.Label>
+                      <Form.Control type="text" value={userCountry} onChange={(e) => setUserCountry(e.target.value)} />
+                    </Form.Group>
+
+
+
+
+                  </Row>
+
+
+
+
+                </Form>
+              </div>
+            </div>
+
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="success" onClick={userUpdate}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* model end */}
 
       <div className="app-header header top-header">
         <div className="container-fluid">
@@ -269,11 +467,11 @@ const Header = () => {
                 >
                   <div className="profile-details mt-2">
                     <span className="mr-3 font-weight-semibold">{username}</span>
-                    <small className="text-muted mr-3">{userRole}</small>
+                    <small className="text-muted mr-3">Employee</small>
                   </div>
                   <img
                     className="avatar avatar-md brround"
-                    src="/1.jpg"
+                    src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
                     alt="image"
                   />
                 </a>
@@ -282,7 +480,7 @@ const Header = () => {
                     <div className="user-image">
                       <img
                         className="user-images"
-                        src="/1.jpg"
+                        src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
                         alt="image"
                       />
                     </div>
@@ -291,7 +489,7 @@ const Header = () => {
                       <p className="mb-1 fs-13 text-muted">{userEmail}</p>
                     </div>
                   </div>
-                  <a href="#" className="dropdown-item pt-3 pb-3">
+                  <a href="#" className="dropdown-item pt-3 pb-3" onClick={handleShow}>
                     <FaUserTie />{" "}
                     My Profile{" "}
                   </a>
@@ -308,7 +506,7 @@ const Header = () => {
                     <FaCircleQuestion />{" "}
                     FAQ{" "}
                   </a>
-                  <a href="/" className="dropdown-item pt-3 pb-3" onClick={()=>Logout()}>
+                  <a href="/" className="dropdown-item pt-3 pb-3" onClick={() => Logout()}>
                     <FaArrowRightToBracket />
                     Sign Out{" "}
                   </a>
