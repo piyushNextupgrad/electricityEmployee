@@ -37,15 +37,15 @@ export default function Home() {
       setisSubmitingLoader(true);
       const result = await postData("/login", { email: email, password: pass });
       console.log("result", result);
-      if (result.success) {
+      if (result.data.name.user_type=="Employee") {
         localStorage.setItem("Etoken", result.data.token);
-        localStorage.setItem("EmpID", 49);
+        localStorage.setItem("EmpID",result.data.name.id);
         setisSubmitingLoader(false);
         toast.success("Login Successfull");
         router.push("/Dashboard");
       } else {
         setisSubmitingLoader(false);
-        toast.error("Login Failed");
+        toast.error("Login Failed [Unauthorised]");
       }
     }
   }
@@ -84,7 +84,7 @@ export default function Home() {
                       tabIndex={500}
                       onSubmit={handleSubmit}
                     >
-                      <h2 className="mb-1 font-weight-semibold">Login</h2>
+                      <h2 className="mb-1 font-weight-semibold">Login [Employee]</h2>
                       <p className="mb-6">Sign In to your account</p>
                       <div className="input-group mb-3">
                         <span className="input-group-addon">
