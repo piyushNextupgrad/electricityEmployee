@@ -37,7 +37,7 @@ export default function Home() {
       setisSubmitingLoader(true);
       const result = await postData("/login", { email: email, password: pass });
       console.log("result", result);
-      if (result.data.name.user_type=="Employee") {
+      if (result?.data?.name?.user_type=="Employee") {
         localStorage.setItem("Etoken", result.data.token);
         localStorage.setItem("EmpID",result.data.name.id);
         setisSubmitingLoader(false);
@@ -61,7 +61,7 @@ export default function Home() {
       <Toaster position="top-center" richColors />
       <div className="page">
         <div className="page-single construction-body">
-          <div className="container text-center single-page single-pageimage  ">
+          <div className="container text-center single-page single-pageimage">
             <div className="row">
               <div className="col-xl-7 col-lg-6 col-md-12">
                 <img
