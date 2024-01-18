@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { getData,putData } from '@/services/services';
+import { getData, putData } from '@/services/services';
 import { Toaster, toast } from "sonner";
 import { getFormatedDate } from '@/helper/helper';
 
@@ -12,8 +12,8 @@ const Serviceschedule = () => {
   const [PreviousServices, setPreviousServices] = useState([])
   const [TodayServices, setTodayServices] = useState([])
   const [upcomingServices, setUpcomingServices] = useState([])
-  const [AllUsers,setAllUsers] = useState([])
-  const[refresh,setRefresh] = useState('')
+  const [AllUsers, setAllUsers] = useState([])
+  const [refresh, setRefresh] = useState('')
   // const [EmpId, setEmpId] = useState()
 
   useEffect(() => {
@@ -21,13 +21,13 @@ const Serviceschedule = () => {
     getAllUser()
   }, [refresh]);
 
-  const getAllUser = async()=>{
+  const getAllUser = async () => {
     try {
       const resp = await getData("/GetAllUser")
-      console.log("all user resp",resp)
+      console.log("all user resp", resp)
       setAllUsers(resp.data)
     } catch (error) {
-      console.log("try-catch error",error)
+      console.log("try-catch error", error)
     }
   }
 
@@ -40,7 +40,7 @@ const Serviceschedule = () => {
         const resp = await getData("/GetServiceBooking")
         // console.log("all booked services resp", resp)
         const EmpServices = resp.data.filter((item) => item.emp_id == EmpId)
-       
+
         const date = new Date();
         const today = getFormatedDate(date, "DD-MM-YYYY")
         // console.log("today", today)
@@ -48,7 +48,7 @@ const Serviceschedule = () => {
         const upcomingServices = []
         const pastServices = [];
         EmpServices.map((item) => {
-          
+
           if (getFormatedDate(item.service_avail_date, "DD-MM-YYYY") == today) {
 
             todayServics.push(item)
@@ -73,19 +73,19 @@ const Serviceschedule = () => {
     setisSubmitingLoader(false)
   }
 
-  const ServiceComplete = async(updateId) =>{
+  const ServiceComplete = async (updateId) => {
     setisSubmitingLoader(true)
     try {
-      
+
       const ServiceCompleteDetails = {
-        "updId":updateId,
-        "status":"1"
+        "updId": updateId,
+        "status": "1"
       }
-      const resp = await putData("/UpdateServiceBooking",ServiceCompleteDetails)
-      console.log("service completed resp",resp)
-      resp.message==="Service Updated Successfully"? toast.success(resp.message):toast.error(resp.message)
+      const resp = await putData("/UpdateServiceBooking", ServiceCompleteDetails)
+      console.log("service completed resp", resp)
+      resp.message === "Service Updated Successfully" ? toast.success(resp.message) : toast.error(resp.message)
     } catch (error) {
-      console.log("try-catch error",error)
+      console.log("try-catch error", error)
     }
     // setTimeout(()=>location.reload(),2000)
     setRefresh(Math.random())
@@ -175,24 +175,24 @@ const Serviceschedule = () => {
                               <tbody>
                                 {PreviousServices.map((item, index) => (
                                   <tr key={index}>
-                                    {console.log("item",item)}
+                                    {console.log("item", item)}
                                     <th scope="row">{item.unique_service_id}</th>
                                     <td>{item.service_name}</td>
                                     <td>{item.service_id}</td>
-                                    <td>{getFormatedDate(item.service_avail_date,"DD-MM-YYYY hh:mm")}</td>
+                                    <td>{getFormatedDate(item.service_avail_date, "DD-MM-YYYY")}</td>
                                     <td>{item.service_cost}</td>
                                     <td>{item.qty}</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.name:'')} [ ID :{item.customer_id}]</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_phno:'')}</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_house_num + " "+ user.user_locality+" "+user.user_landmark+" "+user.user_city+" "+user.user_state:'')}</td>
-                                    
-                                    <td>{getFormatedDate(item.created_at,"DD-MM-YYYY hh:mm")}</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ? user.name : '')} [ ID :{item.customer_id}]</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ? user.user_phno : '')}</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ?  user.user_locality  + " " + user.user_city + " " + user.user_state +" " + user.user_country: '')}</td>
+
+                                    <td>{getFormatedDate(item.created_at, "DD-MM-YYYY")}</td>
                                     <td>
                                       {item.status == 0 ? (<span className="unpaid">Pending</span>) : (<span className="paid done">Done</span>)}
                                     </td>
                                     <td>
-                                      {item.status == 0 ?(<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>):(<Link className="actionsubmit" href="#" onClick={()=>toast.error("Service is completed.")} >Submit</Link>)}
-                                      
+                                      {item.status == 0 ? (<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>) : (<Link className="actionsubmit" href="#" onClick={() => toast.error("Service is completed.")} >Submit</Link>)}
+
                                     </td>
                                   </tr>))}
                                 {/* <tr>
@@ -355,16 +355,16 @@ const Serviceschedule = () => {
                                     <td>{item.service_avail_date}</td>
                                     <td>{item.service_cost}</td>
                                     <td>{item.qty}</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.name:'')} [ ID :{item.customer_id}]</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_phno:'')}</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_house_num + " "+ user.user_locality+" "+user.user_landmark+" "+user.user_city+" "+user.user_state:'')}</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ? user.name : '')} [ ID :{item.customer_id}]</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ? user.user_phno : '')}</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ? user.user_house_num + " " + user.user_locality + " " + user.user_landmark + " " + user.user_city + " " + user.user_state : '')}</td>
                                     <td>{item.created_at}</td>
                                     <td>
                                       {item.status == 0 ? (<span className="unpaid">Pending</span>) : (<span className="paid done">Done</span>)}
                                     </td>
                                     <td>
-                                      {item.status == 0 ?(<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>):(<Link className="actionsubmit" href="#" onClick={()=>toast.error("Service is completed.")} >Submit</Link>)}
-                                      
+                                      {item.status == 0 ? (<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>) : (<Link className="actionsubmit" href="#" onClick={() => toast.error("Service is completed.")} >Submit</Link>)}
+
                                     </td>
                                   </tr>)) : <>No Services</>}
                                 {/* <tr>
@@ -555,16 +555,16 @@ const Serviceschedule = () => {
                                     <td>{item.service_avail_date}</td>
                                     <td>{item.service_cost}</td>
                                     <td>{item.qty}</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.name:'')} [ ID :{item.customer_id}]</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_phno:'')}</td>
-                                    <td>{AllUsers.map((user)=>user.id==item.customer_id?user.user_house_num + " "+ user.user_locality+" "+user.user_landmark+" "+user.user_city+" "+user.user_state:'')}</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ? user.name : '')} [ ID :{item.customer_id}]</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ? user.user_phno : '')}</td>
+                                    <td>{AllUsers.map((user) => user.id == item.customer_id ? user.user_locality + " " + user.user_city + " " + user.user_state + " " + user.user_country : '')}</td>
                                     <td>{item.created_at}</td>
                                     <td>
                                       {item.status == 0 ? (<span className="unpaid">Pending</span>) : (<span className="paid done">Done</span>)}
                                     </td>
                                     <td>
-                                      {item.status == 0 ?(<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>):(<Link className="actionsubmit" href="#" onClick={()=>toast.error("Service is completed.")} >Submit</Link>)}
-                                      
+                                      {item.status == 0 ? (<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>) : (<Link className="actionsubmit" href="#" onClick={() => toast.error("Service is completed.")} >Submit</Link>)}
+
                                     </td>
                                   </tr>)) : <>No Services</>}
                                 {/* <tr>

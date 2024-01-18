@@ -161,7 +161,7 @@ const Ticket = () => {
                                     <td className='cellOverlap'>{item.issue_desc}</td>
                                     <td>{item.customer_id}</td>
                                     <td>{allUser.map((user)=>user.id==item.customer_id?user.user_phno:'')}</td>
-                                    <td>{allUser.map((user)=>user.id==item.customer_id?user.user_house_num + " "+ user.user_locality+" "+user.user_landmark+" "+user.user_city+" "+user.user_state:'')}</td>
+                                    <td>{allUser.map((user)=>user.id==item.customer_id? user.user_locality+" "+user.user_city+" "+user.user_state +" "+user.user_country:'')}</td>
                                     <td>
                                       {item.support_status == 0 ? (<span className="unpaid">Pending</span>) : (<span className="paid done">Done</span>)}
                                     </td>
